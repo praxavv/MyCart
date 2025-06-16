@@ -1,19 +1,45 @@
-// C:\Users\praxa\mycart\client\src\App.js
+// In App.js
+
+
 import React from 'react';
-import ProductList from './components/ProductList'; // Import the ProductList component
-import './App.css'; // Assuming you have some basic styling or default App.css
+import ProductList from './components/ProductList';
+import './App.css';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>My E-commerce Store</h1>
-      </header>
-      <main>
-        <ProductList /> {/* Render the ProductList component here */}
-      </main>
-    </div>
-  );
+ const numberOfStars = 100; // Adjust the number of stars
+ const stars = [...Array(numberOfStars)].map((_, i) => {
+ const x = Math.random() * 100 + 'vw';
+ const y = Math.random() * 100 + 'vh';
+ const size = Math.random() * 3 + 'px';
+ const animationDelay = Math.random() * 2 + 's';
+
+
+ return (
+ <div
+ key={i}
+ className="star"
+ style={{
+ top: y,
+ left: x,
+ width: size,
+ height: size,
+ animationDelay: animationDelay,
+ }}
+ ></div>
+ );
+ });
+
+
+ return (
+ <div className="App">
+ {stars} {/* Render the star elements */}
+ <main>
+ <ProductList />
+ </main>
+ </div>
+ );
 }
+
 
 export default App;

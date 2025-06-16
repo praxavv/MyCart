@@ -1,38 +1,103 @@
+/* App.css */
+
+body {
+  background-color: black;
+  margin: 0;
+  overflow: hidden;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: flex-start;
+  min-height: 100vh;
+  position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: twinkle 2s infinite alternate;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes twinkle {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
+}
+
+/* Updated style for the product card */
+.product-card {
+  background-color: transparent; /* Make product card background transparent */
+  border: 1px solid rgba(0, 255, 0, 0.5); /* Subtle green border for the card */
+  padding: 15px; /* Use 15px as per ProductList.js inline style */
+  border-radius: 8px;
+  /* Removed original box-shadow to match alien theme, uncomment if you want a shadow */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  text-align: center;
+  width: 200px; /* Keep your desired width from ProductList.js inline style */
+  display: flex; /* Added for better internal alignment */
+  flex-direction: column;
+  justify-content: space-between; /* Space out content vertically */
+  align-items: center; /* Center items horizontally within the card */
+  /* Keep margin-top if you want spacing from the Our Products heading */
+  margin-top: 20px;
+}
+
+
+/* Style for the product title */
+.product-title {
+  color: #00FF00; /* Neon green color */
+  text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00; /* Glowing effect */
+}
+
+
+/* Style for the product description */
+.product-description {
+  color: #00FF00;
+  text-shadow: 0 0 5px #00FF00;
+}
+
+
+/* Style for the price and "In Stock" text */
+.product-price,
+.product-stock {
+  color: #00FF00;
+  text-shadow: 0 0 5px #00FF00;
+}
+
+
+/* Style for the "Add to Cart" button */
+.add-to-cart-button {
+  background-color: transparent; /* Make the button background transparent */
+  color: #00FF00;
+  border: 2px solid #00FF00; /* Green border */
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-shadow: 0 0 8px #00FF00;
+  box-shadow: 0 0 15px #00FF00; /* Glowing button effect */
+}
+
+
+.add-to-cart-button:hover {
+  background-color: rgba(0, 255, 0, 0.1); /* Slightly fill on hover */
+}
+
+
+/* New styles for the main heading and loading/error messages */
+.products-heading {
+  color: #00FF00; /* Neon green color */
+  text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00; /* Glowing effect */
+  margin-bottom: 20px; /* Add some space below the heading */
+}
+
+.loading-message,
+.error-message {
+  color: #00FF00;
+  text-shadow: 0 0 8px #00FF00;
+  margin-top: 50px; /* Push it down a bit from the top */
+  font-size: 1.2em;
 }
