@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useCart } from './CartContext';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { dispatch } = useCart();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -35,24 +37,24 @@ const ProductList = () => {
             {/* Added className for the main heading */}
             <h2 className="products-heading">Our Products</h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-                {products.map((product) => (
-                    // Added className for the product card wrapper
-                    <div key={product._id} className="product-card">
-                        {/* Added className for product name */}
-                        <h3 className="product-title">{product.name}</h3>
-                        {/* Added className for description */}
-                        <p className="product-description">{product.description}</p>
-                        {/* Added className for price */}
-                        <p className="product-price"><strong>Price: ${product.price.toFixed(2)}</strong></p>
-                        {/* Added className for stock */}
-                        <p className="product-stock">In Stock: {product.countInStock}</p>
-                        {product.imageUrl && (
-                            <img src={product.imageUrl} alt={product.name} style={{ width: '100%', height: '150px', objectFit: 'cover', marginBottom: '10px' }} />
-                        )}
-                        {/* Added className for the button */}
-                        <button className="add-to-cart-button">Add to Cart</button>
-                    </div>
-                ))}
+{products.map((product) => (
+    // Added className for the product card wrapper
+    <div key={product._id} className="product-card">
+        {product.imageUrl && (
+            <img src={product.imageUrl} alt={product.name} className="product-image" />
+        )}
+
+        <div className="product-info">
+            <h3 className="product-title">{product.name}</h3>
+            <p className="product-description-text">{product.description}</p>
+            <p className="product-price"><strong>Price: ${product.price.toFixed(2)}</strong></p>
+            <p className="product-stock">In Stock: {product.stock}</p>
+            <button className="add-to-cart-button" onClick={() => dispatch({ type: 'ADD_TO_CART', product })}>
+              Add to Cart
+            </button>
+        </div>
+    </div>
+))}
             </div>
         </div>
     );

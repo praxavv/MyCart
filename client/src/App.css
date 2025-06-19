@@ -1,103 +1,513 @@
 /* App.css */
 
-body {
-  background-color: black;
+html, body {
+  height: 100%; /* Make html and body fill the entire viewport height */
+  overflow: hidden; /* Prevent scrolling on the entire page */
   margin: 0;
-  overflow: hidden;
+  padding: 0; /* Ensure no default padding is adding to height */
+}
+
+body {
+  background: #0a0a0a;
+  color: #39ff14;
 }
 
 .App {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   min-height: 100vh;
-  position: relative;
+  background: #0a0a0a;
+  box-shadow: 0 0 10px #39ff14 inset;
 }
 
 .star {
   position: absolute;
-  background-color: white;
-  border-radius: 50%;
-  opacity: 0.7;
+  background: #fff;
+  width: 5px;
+  height: 5px;
+  opacity: 0.2;
   animation: twinkle 2s infinite alternate;
+  clip-path: polygon(
+    50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+    50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%
+  );
 }
 
 @keyframes twinkle {
-  from { opacity: 0.7; }
+  from { opacity: 0.2; }
   to { opacity: 1; }
+}
+
+.main-nav {
+  width: 100vw;
+  background: rgba(10, 10, 10, 0.95);
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  border-bottom: 2px solid #39ff14;
+  box-shadow: 0 2px 20px #39ff14;
+}
+.main-nav a, .main-nav button {
+  color: #39ff14;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.2rem;
+  text-shadow: 0 0 8px #39ff14;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+.main-nav a:hover, .main-nav button:hover {
+  
+  text-shadow: 0 0 16px #39ff14;
+}
+
+.products-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  margin: 2rem 0 1rem 0;
+  color: #fff;
+  text-shadow: 0 0 5px #39ff14, 0 0 10px #1bf507;
 }
 
 /* Updated style for the product card */
 .product-card {
-  background-color: transparent; /* Make product card background transparent */
-  border: 1px solid rgba(0, 255, 0, 0.5); /* Subtle green border for the card */
-  padding: 15px; /* Use 15px as per ProductList.js inline style */
-  border-radius: 8px;
-  /* Removed original box-shadow to match alien theme, uncomment if you want a shadow */
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  text-align: center;
-  width: 200px; /* Keep your desired width from ProductList.js inline style */
-  display: flex; /* Added for better internal alignment */
-  flex-direction: column;
-  justify-content: space-between; /* Space out content vertically */
-  align-items: center; /* Center items horizontally within the card */
-  /* Keep margin-top if you want spacing from the Our Products heading */
-  margin-top: 20px;
+  border: 2px solid #57ff14;
+  border-radius: 60px;
+  box-shadow: 0 0 32px #39ff1433 inset;
+  padding: 2rem 2.5rem;
+  margin: 1rem auto;
+  /* Use clamp to make the card responsive */
+  width: clamp(500px, 60vw, 900px);
+  min-height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  transition: box-shadow 0.3s, border 0.3s, transform 1.25s;
+  position: relative;
+  overflow: hidden;
+  gap: 2rem;
 }
 
+/* Product card footer */
+.product-card-footer {
+  width: 100%;
+  background: rgba(10, 10, 10, 0.92);
+  border-top: 1px solid #39ff14;
+  color: #39ff14;
+  text-align: right;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  position: absolute;
+  left: 0;
+  bottom: 30px;
+  z-index: 2;
+  box-shadow: 0 -2px 12px #39ff1433;
+}
+
+/* Ensure content above footer does not overlap */
+.product-card-content {
+  width: 100%;
+  padding-bottom: 2.5rem; /* Space for footer */
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .product-card {
+    width: clamp(350px, 90vw, 700px);
+    padding: 1.2rem;
+    gap: 1rem;
+  }
+}
+
+/* Hover effect for product card */
+.product-card:hover {
+  
+  box-shadow: 0 0 42px rgba(4, 253, 45, 0.952);
+  border: 2px solid #39ff14;
+  transform: scale(1.02);
+  transition: 1s;
+}
 
 /* Style for the product title */
 .product-title {
-  color: #00FF00; /* Neon green color */
-  text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00; /* Glowing effect */
+  font-size: 1.3rem;
+  color: #39ff14;
+  text-shadow: 0 0 8px #39ff14;
 }
 
-
-/* Style for the product description */
-.product-description {
-  color: #00FF00;
-  text-shadow: 0 0 5px #00FF00;
+/* NEW: Style for the product description container (the new square that includes text and image) */
+.product-description-container {
+  width: calc(100% - 10px); /* Take full width minus padding */
+  aspect-ratio: 1 / 1; /* Makes the entire container square on mobile */
+  display: flex;
+  flex-direction: column; /* Stack text and image vertically by default (for mobile) */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  box-sizing: border-box; /* Include padding/border in the element's total width and height */
+  overflow: hidden; /* Hide overflow if content is too large */
+  border: 1px solid rgba(0, 255, 0, 0.5); /* Optional: add a border to this square */
+  margin: 0 5px 10px 5px; /* Adjust margin to center and add space below */
+  padding: 5px; /* Add some internal padding to the square container */
+  flex-grow: 1; /* Allow this section to grow and take available space */
+  min-height: 0; /* Allow flex item to shrink below content size */
+  max-height: 50%; /* Limit this container's height to ensure button space on mobile */
+  overflow-y: auto; /* Add scroll for description if needed on mobile */
 }
 
+/* NEW: Style for the product description text (inside the new square container) */
+.product-description-text {
+  color: #baffc9;
+  margin: 0.5rem 0;
+}
+
+/* NEW: Style for the product description image (inside the new square container) */
+.product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 8px #39ff14;
+}
 
 /* Style for the price and "In Stock" text */
-.product-price,
-.product-stock {
-  color: #00FF00;
-  text-shadow: 0 0 5px #00FF00;
+.product-price {
+  color: #fff;
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  text-shadow: 0 0 8px #39ff14;
 }
-
+.product-stock {
+  color: #39ff14;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
 
 /* Style for the "Add to Cart" button */
 .add-to-cart-button {
-  background-color: transparent; /* Make the button background transparent */
-  color: #00FF00;
-  border: 2px solid #00FF00; /* Green border */
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  text-shadow: 0 0 8px #00FF00;
-  box-shadow: 0 0 15px #00FF00; /* Glowing button effect */
+  margin: 1rem 0 0 0; /* Reduced margin to keep button inside card */
+  display: block;
+  background: #39ff14 !important;
+  color: #0a0a0a !important;
+  border: 3px solid #fff !important;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 0 16px #39ff14, 0 0 8px #fff;
+  z-index: 10;
+  position: static;
+  width: 80%; /* Make button width responsive and centered */
+  align-self: center;
 }
-
-
+/* Add hover effect for the button */
 .add-to-cart-button:hover {
-  background-color: rgba(0, 255, 0, 0.1); /* Slightly fill on hover */
+  background: #39ff14 !important;
+  color: #0a0a0a !important;
+  box-shadow: 0 0 10px #39ff14, 0 0 20px #fff;
+  transition: box-shadow 1s;
+  cursor: pointer;
+
 }
 
-
-/* New styles for the main heading and loading/error messages */
-.products-heading {
-  color: #00FF00; /* Neon green color */
-  text-shadow: 0 0 10px #00FF00, 0 0 20px #00FF00; /* Glowing effect */
-  margin-bottom: 20px; /* Add some space below the heading */
+.add-to-cart-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 6px #39ff14, 0 0 12px #fff;
 }
 
-.loading-message,
-.error-message {
-  color: #00FF00;
-  text-shadow: 0 0 8px #00FF00;
-  margin-top: 50px; /* Push it down a bit from the top */
-  font-size: 1.2em;
+/* New styles for the cart */
+.cart-container {
+  background: rgba(20, 20, 20, 0.98);
+  border: 2px solid #39ff14;
+  border-radius: 20px;
+  box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14;
+  padding: 2rem;
+  margin: 2rem auto;
+  width: 90vw;
+  max-width: 600px;
+  transform: scale(1.02);
+}
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+.cart-table th, .cart-table td {
+  border-bottom: 1px solid #39ff14;
+  padding: 0.7rem;
+  text-align: center;
+}
+.cart-table th {
+  color: #39ff14;
+  text-shadow: 0 0 8px #39ff14;
+}
+.cart-table td {
+  color: #39ff14;
+}
+.remove-cart-item {
+  background: none;
+  color: #ff39a6;
+  border: 1px solid #ff39a6;
+  border-radius: 6px;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  box-shadow: 0 0 8px #ff39a6;
+  transition: background 0.2s, color 0.2s;
+}
+.remove-cart-item:hover {
+  background: #ff39a6;
+  color: #0a0a0a;
+}
+.cart-total {
+  font-size: 1.3rem;
+  color: #39ff14;
+  text-shadow: 0 0 8px #39ff14;
+  margin-bottom: 1rem;
+}
+.checkout-button {
+  background: #0a0a0a;
+  color: #39ff14;
+  border: 2px solid #39ff14;
+  border-radius: 8px;
+  padding: 0.7rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 12px #39ff14;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.checkout-button:hover {
+  background: #39ff14;
+  color: #0a0a0a;
+  box-shadow: 0 0 32px #39ff14, 0 0 8px #fff;
+}
+.checkout-status {
+  margin-top: 1rem;
+  color: #39ff14;
+  text-shadow: 0 0 8px #39ff14;
+}
+.cart-empty {
+  color: #fff;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.5rem;
+  text-shadow: 0 0 8px #39ff14;
+}
+
+/* Auth styles */
+.auth-container {
+  background: rgba(20, 20, 20, 0.95);
+  border: 2px solid #39ff14;
+  border-radius: 20px;
+  box-shadow: 0 0 24px #39ff14;
+  padding: 2rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  width: 90%;
+}
+.auth-container h2 {
+  color: #39ff14;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 8px #39ff14;
+}
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.auth-container input {
+  background: rgba(10, 10, 10, 0.8) !important;
+  border: 2px solid #39ff14 !important;
+  border-radius: 8px;
+  padding: 0.8rem;
+  color: #39ff14 !important;
+  font-size: 1rem;
+  outline: none !important;
+  transition: all 0.3s ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.auth-container input::placeholder {
+  color: rgba(57, 255, 20, 0.5) !important;
+  opacity: 1;
+}
+.auth-container input:focus {
+  box-shadow: 0 0 12px #39ff14;
+  background: rgba(10, 10, 10, 0.9) !important;
+  color: #39ff14 !important;
+}
+.auth-container input:focus::placeholder {
+  color: rgba(57, 255, 20, 0.3) !important;
+}
+.auth-container input::selection {
+  background-color: rgba(57, 255, 20, 0.3);
+  color: #39ff14;
+}
+.auth-container input:-webkit-autofill,
+.auth-container input:-webkit-autofill:hover,
+.auth-container input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #39ff14 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #0a0a0a inset !important;
+  box-shadow: 0 0 0px 1000px #0a0a0a inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: #39ff14;
+}
+.auth-container button {
+  background: #39ff14;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 1rem;
+}
+.auth-container button:hover {
+  background: #39ff14;
+  box-shadow: 0 0 16px #39ff14;
+}
+.auth-container button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.auth-error {
+  color: #ff3939;
+  text-align: center;
+  margin-top: 1rem;
+}
+.auth-success {
+  color: #39ff14;
+  text-align: center;
+  margin-top: 1rem;
+}
+.auth-toggle {
+  color: #39ff14;
+  text-align: center;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+.auth-toggle:hover {
+  color: #fff;
+  text-shadow: 0 0 8px #fff, 0 0 70px #39ff14;
+  transition: 0.8s;
+}
+
+/* --- Laptop/Desktop Specific Styles (Horizontal Layout) --- */
+@media (min-width: 769px) { /* Applies to screens wider than 768px (common breakpoint) */
+
+  .product-card {
+    width: clamp(400px, 60vw, 800px); /* Make the card wider for laptops */
+    aspect-ratio: 4 / 3; /* Make it a horizontal rectangle */
+    max-height: calc(100vh - 80px); /* Adjust max-height for wider card */
+  }
+
+  .product-description-container {
+    flex-direction: row; /* Arrange image and text horizontally */
+    justify-content: space-around; /* Space them out */
+    align-items: center; /* Vertically align them */
+    aspect-ratio: unset; /* Remove the square aspect ratio */
+    height: 100%; /* Take full height of its parent (.product-card) */
+    width: 100%; /* Take full width */
+    padding: 10px; /* Increase padding for better spacing */
+    overflow-y: hidden; /* Prevent scrolling on this container for horizontal layout */
+    overflow-x: hidden; /* Ensure no horizontal scroll */
+  }
+
+  .product-image {
+    flex: 1; /* Allow image to take available space */
+    max-width: 50%; /* Limit image width to half of the container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure image fits */
+    border-bottom: none; /* Remove bottom border for horizontal layout */
+    border-right: 1px solid rgba(0, 255, 0, 0.3); /* Add right border instead */
+    margin-bottom: 0; /* Remove mobile margin */
+    padding-right: 10px; /* Space between image and text */
+  }
+
+  .product-description-text {
+    flex: 1; /* Allow text to take available space */
+    text-align: left; /* Align text to the left */
+    padding: 0 10px; /* Add horizontal padding */
+    margin-bottom: 0; /* Remove mobile margin */
+    overflow-y: auto; /* Allow scrolling for long descriptions */
+    max-height: 100%; /* Ensure text box doesn't overflow its container */
+    white-space: normal; /* Allow text to wrap naturally */
+    text-overflow: clip; /* No ellipsis if scrolling is enabled */
+  }
+
+  /* Adjust price and stock for horizontal layout if needed,
+     they are outside .product-description-container in your current structure,
+     so they will just naturally stack below the now horizontal description container. */
+  .product-price,
+  .product-stock {
+    text-align: left; /* Align price/stock left to match new text alignment */
+    margin-left: 10px; /* Maintain alignment */
+    width: auto; /* No longer need 100% width for centering */
+  }
+
+  .add-to-cart-button {
+    margin: 50px 10px; /* Adjust margin for consistent alignment */
+    width: auto; /* Let button width be natural */
+  }
+}
+
+/* Example CSS for a square description box (unrelated to product card, but keeping it) */
+.description-box {
+  width: clamp(300px, 40vw, 600px); /* scales between 300px and 600px based on viewport width */
+  aspect-ratio: 4 / 3; /* horizontal rectangle by default (width > height) */
+  border: 1px solid #ccc;
+  padding: 1rem;
+  box-sizing: border-box;
+  margin: auto; /* Center the box with margin */
+  max-width: 90%; /* Ensure it doesn't exceed 90% of the viewport width */
+}
+
+/* On mobile, flip to vertical rectangle */
+@media (max-width: 768px) {
+  .description-box {
+    aspect-ratio: 3 / 4; /* vertical rectangle on smaller screens */
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #39ff14;
+  border-radius: 8px;
+  box-shadow: 0 0 8px #39ff14;
+}
+
+/* Example CSS for your product card container */
+/* filepath: src/components/ProductCard.css */
+.product-card-container {
+    width: 80vw;              /* Responsive width */
+    max-width: 900px;         /* Prevents it from being too wide */
+    margin: 40px auto 0 auto; /* Brings it up and centers horizontally */
+    display: flex;            /* Flex for side-by-side layout */
+    gap: 32px;                /* Space between image and details */
+    align-items: flex-start;
+    align-items: flex-end;  /* Align items to the top */
+    padding: 32px;            /* Padding inside the card */
+    box-sizing: border-box;   /* Includes padding in width */
+}
+
+/* Make sure the image fits */
+.product-card-image {
+    max-width: 300px;
+    width: 100%;
+    height: 50%;
+    border-radius: 12px;
+    object-fit: cover;
 }

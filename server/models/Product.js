@@ -22,8 +22,8 @@ const productSchema = new mongoose.Schema({
     stock: {
         type: Number,
         required: true,
-        default: 0,
-        min: 0 // Stock cannot be negative
+        default: 10,
+        min: 1 // Stock cannot be negative
     },
     createdAt: {
         type: Date,

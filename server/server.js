@@ -8,6 +8,7 @@ require('dotenv').config();
 // Import routes
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 // Use API routes
 app.use('/api/products', productRoutes); // All routes in productRoutes will be prefixed with /api/products
 app.use('/api/users', userRoutes);     // All routes in userRoutes will be prefixed with /api/users
+app.use('/api/orders', orderRoutes);   // All routes in orderRoutes will be prefixed with /api/orders
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
