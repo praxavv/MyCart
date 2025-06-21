@@ -42,12 +42,12 @@ body {
 .main-nav {
   width: 100vw;
   background: rgba(10, 10, 10, 0.95);
-  padding: 1rem 0;
+  padding: 0.5rem 0 0.25rem 0;
   display: flex;
   justify-content: center;
   gap: 2rem;
   border-bottom: 2px solid #39ff14;
-  box-shadow: 0 2px 20px #39ff14;
+  box-shadow: 0 2px 30px #39ff14;
 }
 .main-nav a, .main-nav button {
   color: #39ff14;
@@ -63,11 +63,10 @@ body {
 .main-nav a:hover, .main-nav button:hover {
   
   text-shadow: 0 0 16px #39ff14;
-}
 
 .products-heading {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   margin: 2rem 0 1rem 0;
   color: #fff;
   text-shadow: 0 0 5px #39ff14, 0 0 10px #1bf507;
@@ -80,11 +79,13 @@ body {
   box-shadow: 0 0 32px #39ff1433 inset;
   padding: 2rem 2.5rem;
   margin: 1rem auto;
+  max-width: 280px;
+  max-height: 400px;
   /* Use clamp to make the card responsive */
   width: clamp(500px, 60vw, 900px);
   min-height: 100px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: stretch;
   transition: box-shadow 0.3s, border 0.3s, transform 1.25s;
   position: relative;
